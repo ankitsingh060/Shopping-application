@@ -1,16 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shopping_application/constants/global_variable.dart';
+import 'package:shopping_application/features/Screen/home_screen.dart';
 import 'package:shopping_application/features/auth/screen/auth_screen.dart';
+import 'package:shopping_application/features/auth/services/auth_services.dart';
 import 'package:shopping_application/router.dart';
+import 'package:shopping_application/userProvider/user_provider.dart';
+
+import 'common/widgets/bottom_bar.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+       providers: [
+         ChangeNotifierProvider(
+           create: (context) => UserProvider(),
+         )
+       ]
+      ,child: const MyApp()
+  ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final AuthService authService = AuthService();
+
+  @override
+  void initState() {
+    super.initState();
+    authService.getUserData(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,13 +53,9 @@ class MyApp extends StatelessWidget {
         )
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: Scaffold(
-        // appBar: AppBar(
-        //
-        //   title: Text("Shooping app"),
-        // ),
-          body: AuthScreen()
-      )
+      home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+          ? const BottomBar()
+          : const AuthScreen(),
     );
   }
 }

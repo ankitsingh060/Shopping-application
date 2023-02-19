@@ -42,11 +42,10 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   void signInUser(){
-    authService.signUpUser(
+    authService.signInUser(
         context: context,
         email: _emailController.text,
-        password: _passwordController.text,
-        name: _nameController.text
+        password: _passwordController.text
     );
   }
 
@@ -139,7 +138,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     padding: const EdgeInsets.all(8),
                     color: GlobalVariables.backgroundColor,
                     child: Form(
-                      key: _signUpFormKey,
+                      key: _signInFormKey,
                       child: Column(
                         children: [
                           const SizedBox(height: 10,),
@@ -147,7 +146,11 @@ class _AuthScreenState extends State<AuthScreen> {
                           const SizedBox(height: 10,),
                           CustomTextField(Controller: _passwordController, hint: "Password"),
                           const SizedBox(height: 10,),
-                          CustomBottom(text: "Sign-In ", onTap: (){})
+                          CustomBottom(text: "Sign-In ", onTap: (){
+                            if(_signInFormKey.currentState!.validate()){
+                              signInUser();
+                            }
+                          })
                         ],
                       ),
                     ),
