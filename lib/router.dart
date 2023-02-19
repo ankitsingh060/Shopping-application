@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shopping_application/features/Screen/home_screen.dart';
 import 'package:shopping_application/features/auth/screen/auth_screen.dart';
-
 import 'common/widgets/bottom_bar.dart';
+import 'features/home/Screen/home_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings)
 {

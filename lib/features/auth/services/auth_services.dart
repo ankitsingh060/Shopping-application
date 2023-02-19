@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopping_application/common/widgets/bottom_bar.dart';
 import 'package:shopping_application/constants/error_handling.dart';
 import 'package:shopping_application/constants/utils.dart';
-import 'package:shopping_application/features/Screen/home_screen.dart';
 import 'package:shopping_application/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:shopping_application/userProvider/user_provider.dart';

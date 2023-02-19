@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_application/constants/global_variable.dart';
-import 'package:shopping_application/features/Screen/home_screen.dart';
+import 'package:shopping_application/features/account/screen/account_screen.dart';
+
+import '../../features/home/Screen/home_screen.dart';
 
 class BottomBar extends StatefulWidget {
   static const String routeName = '/acutal-home';
@@ -17,7 +19,7 @@ class _BottomBarState extends State<BottomBar> {
 
   List<Widget> pages = [
     const HomeScreen(),
-    const Center(child:  Text('Account Page'),),
+    const AccountScreen(),
     const Center(child:  Text('Cart Page'),),
   ];
 

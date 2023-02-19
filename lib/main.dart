@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_application/constants/global_variable.dart';
-import 'package:shopping_application/features/Screen/home_screen.dart';
 import 'package:shopping_application/features/auth/screen/auth_screen.dart';
 import 'package:shopping_application/features/auth/services/auth_services.dart';
 import 'package:shopping_application/router.dart';
@@ -40,6 +39,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'shooping application',
+      debugShowCheckedModeBanner:false,
       theme: ThemeData(
         scaffoldBackgroundColor: GlobalVariables.backgroundColor,
         colorScheme: const ColorScheme.light(
