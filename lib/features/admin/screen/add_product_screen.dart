@@ -1,11 +1,14 @@
 import 'dart:io';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_application/common/widgets/custom_bottom.dart';
 import 'package:shopping_application/common/widgets/custom_textfield.dart';
 import 'package:shopping_application/constants/global_variable.dart';
 import 'package:shopping_application/constants/utils.dart';
+import 'package:shopping_application/features/admin/services/admin_services.dart';
+import 'package:shopping_application/features/home/widgets/carousel_image.dart';
 
 class AddProductScreen extends StatefulWidget {
   static const String routeName = '/add-product';
@@ -20,11 +23,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController qualityController = TextEditingController();
+  final AdminServices adminServices = AdminServices();
 
 
 
   String category = 'Mobiles';
   List<File> images = [];
+  final _addProductFormKey = GlobalKey<FormState>();
+
   @override
   void dispose() {
     super.dispose();
@@ -50,6 +56,20 @@ class _AddProductScreenState extends State<AddProductScreen> {
     'Grocery'
   ];
 
+  void sellProduct(){
+    if(_addProductFormKey.currentState!.validate() && images.isNotEmpty){
+      adminServices.seeProduct(
+          context: context,
+          name: productNameController.text,
+          description: descriptionController.text,
+          price: double.parse(priceController.text),
+          quantity: double.parse(qualityController.text),
+          category: category,
+          images: images
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -71,13 +91,31 @@ class _AddProductScreenState extends State<AddProductScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Form(
-            child: Column(
+            key: _addProductFormKey,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Column(
               children: [
                 const SizedBox(height: 20,),
-                GestureDetector(
+                images.isNotEmpty
+                 ? CarouselSlider(
+                    items: images.map(
+                          (i) {
+                        return Builder(
+                          builder: (BuildContext context) =>
+                              Image.file(
+                                i,
+                                fit: BoxFit.cover,
+                                height: 200,
+                              ),
+                        );
+                      },
+                    ).toList(),
+                    options: CarouselOptions(viewportFraction: 1, height: 200)
+                )
+                : GestureDetector(
                   onTap: selectImages,
                   child: DottedBorder(
                     borderType: BorderType.RRect,
@@ -145,14 +183,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 const SizedBox(height: 10,),
                 CustomBottom(
                     text: 'Sell',
-                    onTap: (){}
+                    onTap: sellProduct,
                 ),
 
               ],
             ),
+            ),
           ),
         ),
-      ),
 
     );
   }

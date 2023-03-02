@@ -1,9 +1,8 @@
-console.log("Hello world");
-
 const { application } = require("express");
 const express = require("express");
 const authRouter = require("./router/auth");
 const mongoose = require("mongoose");
+const adminRouter = require("./router/admin");
 
 const PORT = 3000;
 const app = express();
@@ -28,6 +27,7 @@ and value of your passing name
 //middleware
 app.use(express.json());
 app.use(authRouter);
+app.use(adminRouter);
 
 //connections
 mongoose
